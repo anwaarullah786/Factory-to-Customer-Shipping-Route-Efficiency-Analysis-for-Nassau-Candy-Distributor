@@ -518,22 +518,20 @@ def style_plot(fig, height=None):
 
 
 def render_metric_grid(cards, secondary=False):
-    """Render attractive custom KPI cards."""
+    """Render attractive custom KPI cards without markdown code-block leakage."""
     cls = "metric-grid secondary" if secondary else "metric-grid"
-    html = [f'<div class="{cls}">']
+    html_parts = [f'<div class="{cls}">']
     for card in cards:
-        html.append(
-            f"""
-            <div class="metric-card" style="--accent:{card['color']};">
-                <div class="metric-icon">{card['icon']}</div>
-                <div class="metric-label">{card['label']}</div>
-                <div class="metric-value">{card['value']}</div>
-                <div class="metric-help">{card['help']}</div>
-            </div>
-            """
+        html_parts.append(
+            f'<div class="metric-card" style="--accent:{card["color"]};">'
+            f'<div class="metric-icon">{card["icon"]}</div>'
+            f'<div class="metric-label">{card["label"]}</div>'
+            f'<div class="metric-value">{card["value"]}</div>'
+            f'<div class="metric-help">{card["help"]}</div>'
+            f'</div>'
         )
-    html.append("</div>")
-    return "".join(html)
+    html_parts.append('</div>')
+    return ''.join(html_parts)
 
 # =====================================================
 # CONSTANT MAPPINGS
